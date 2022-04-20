@@ -3,7 +3,7 @@ using System;
 
 [assembly: InternalsVisibleTo("Tests")]
 
-namespace MyApp // Note: actual namespace depends on the project name.
+namespace WebAPI
 {
     internal class Program
     {

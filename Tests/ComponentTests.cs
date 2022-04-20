@@ -14,10 +14,10 @@ namespace Tests
             var webAppFactory = new WebApplicationFactory<WebAPI.Program>();
             var httpClient = webAppFactory.CreateDefaultClient();
 
-            var response = await httpClient.GetAsync("");
+            var response = await httpClient.GetAsync("/WeatherForecast");
             var result = await response.Content.ReadAsStringAsync();
 
-            result.Should().Contain("");
+            result.Should().Contain("temperatureC");
         }
     }
 }
