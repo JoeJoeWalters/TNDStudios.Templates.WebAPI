@@ -1,5 +1,6 @@
 using System.Runtime.CompilerServices;
 using System;
+using Microsoft.AspNetCore.Mvc.Versioning;
 
 [assembly: InternalsVisibleTo("Tests")]
 
@@ -11,6 +12,25 @@ namespace WebAPI
         {
 
             var builder = WebApplication.CreateBuilder(args);
+
+            // API Versioning
+            builder.Services.AddApiVersioning(o =>
+            {
+                o.AssumeDefaultVersionWhenUnspecified = true;
+                o.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
+                o.ReportApiVersions = true;
+                o.ApiVersionReader = ApiVersionReader.Combine(
+                    new QueryStringApiVersionReader("api-version"),
+                    new HeaderApiVersionReader("X-Version"),
+                    new MediaTypeApiVersionReader("ver"));
+            });
+
+            builder.Services.AddVersionedApiExplorer(
+                options =>
+                {
+                    options.GroupNameFormat = "'v'VVV";
+                    options.SubstituteApiVersionInUrl = true;
+                });
 
             // Add services to the container.
             builder.Services.AddControllers();
