@@ -15,8 +15,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<!-- Can be done here or in the assumbly refernce e.g. Program.cs [assembly: InternalsVisibleTo("Tests")] -->
-		<!--<InternalsVisibleTo Include="Tests" />-->
+	  <ProjectReference Include="..\Domain\Domain.csproj" />
 	</ItemGroup>
 	
 </Project>
