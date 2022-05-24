@@ -31,5 +31,22 @@ namespace Tests
             resolvedObject.CountryCode2.Should().Be(expected2Digit);
             resolvedObject.CountryName.Should().Be(expectedName);
         }
+
+        [Fact]
+        public void When_3Digit_Address_Doesnt_Exist()
+        {
+            // Arrange
+            CountryVM resolvedObject;
+            string fakeCode = "Fake";
+
+            // Act
+            resolvedObject = new CountryVM(fakeCode);
+
+            // Assert
+            resolvedObject.Should().NotBeNull();
+            resolvedObject.CountryCode.Should().Be(fakeCode);
+            resolvedObject.CountryCode2.Should().BeEmpty();
+            resolvedObject.CountryName.Should().BeEmpty();
+        }
     }
 }
