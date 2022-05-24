@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using ISO._3166; // https://github.com/maisak/iso.resolvers/tree/master/src
+using ISO._3166.Models;
 
 namespace Domain
 {
@@ -23,9 +24,12 @@ namespace Domain
             CountryCode = countryCode;
             if (countryCode == String.Empty)
             {
-                var result = CountryCodesResolver.GetByAlpha3Code(countryCode);
-                CountryCode2 = result.Alpha2;
-                CountryName = result.Name;
+                CountryCode result = CountryCodesResolver.GetByAlpha3Code(countryCode);
+                if (result != null)
+                {
+                    CountryCode2 = result.Alpha2 ?? String.Empty;
+                    CountryName = result.Name ?? String.Empty;
+                }
             }
         }
     }
