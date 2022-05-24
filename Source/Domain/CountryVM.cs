@@ -22,7 +22,7 @@ namespace Domain
         public CountryVM(string countryCode) 
         {
             CountryCode = countryCode;
-            if (countryCode == String.Empty)
+            if (countryCode != String.Empty)
             {
                 CountryCode result = CountryCodesResolver.GetByAlpha3Code(countryCode);
                 if (result != null)
