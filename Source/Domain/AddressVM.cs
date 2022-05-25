@@ -24,6 +24,11 @@ namespace Domain
 
         public string PostalCode { get; set; } = string.Empty;
 
+        public AddressVM()
+        {
+
+        }
+
         public AddressVM(Address source)
         {
             this.Id = source.Id;
