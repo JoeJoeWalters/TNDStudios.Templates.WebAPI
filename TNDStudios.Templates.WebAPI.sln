@@ -9,7 +9,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{DBFE22
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "Source\WebAPI\WebAPI.csproj", "{04D7B890-2504-4E48-A4E4-E93C444E9953}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Source\Domain\Domain.csproj", "{C4D7EB9E-14FC-4584-AF1F-3A043F625086}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Source\Domain\Domain.csproj", "{C4D7EB9E-14FC-4584-AF1F-3A043F625086}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Source\Repository\Repository.csproj", "{9B615D00-807F-4B62-ADC6-9950ED26DA43}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,10 @@ Global
 		{C4D7EB9E-14FC-4584-AF1F-3A043F625086}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4D7EB9E-14FC-4584-AF1F-3A043F625086}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4D7EB9E-14FC-4584-AF1F-3A043F625086}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B615D00-807F-4B62-ADC6-9950ED26DA43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B615D00-807F-4B62-ADC6-9950ED26DA43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B615D00-807F-4B62-ADC6-9950ED26DA43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B615D00-807F-4B62-ADC6-9950ED26DA43}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -36,6 +42,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{04D7B890-2504-4E48-A4E4-E93C444E9953} = {DBFE2293-0D73-4F2E-94C6-C81991878593}
 		{C4D7EB9E-14FC-4584-AF1F-3A043F625086} = {DBFE2293-0D73-4F2E-94C6-C81991878593}
+		{9B615D00-807F-4B62-ADC6-9950ED26DA43} = {DBFE2293-0D73-4F2E-94C6-C81991878593}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {533D75FC-B0E6-4654-B389-321203AFE649}
