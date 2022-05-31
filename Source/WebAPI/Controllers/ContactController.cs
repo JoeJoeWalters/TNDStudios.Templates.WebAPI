@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {
+    /// <summary>
+    /// Contacts
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
     [ApiVersion("1.0")]
@@ -20,10 +23,28 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <returns>An array of contacts</returns>
         [HttpGet]
-        [Route("/Query")]
+        [Route("Query")]
         public IEnumerable<ContactVM> QueryContacts()
         {
             return new List<ContactVM>() { };
         }
+
+        /// <summary>
+        /// Save a contact
+        /// </summary>
+        /// <param name="contact">The contact model to be saved</param>
+        /// <returns></returns>
+        [HttpPost]
+        public IActionResult Add(Contact contact)
+        {
+            return Ok(new ContactVM() { });
+        }
+
+        [HttpPatch]
+        public IActionResult Merge(Contact contact)
+        {
+            return Ok(new ContactVM() { });
+        }
+
     }
 }

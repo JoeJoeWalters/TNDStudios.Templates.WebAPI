@@ -45,8 +45,8 @@ namespace WebAPI
                     options.SwaggerDoc("v1", new OpenApiInfo
                     {
                         Version = "v1",
-                        Title = "ToDo API",
-                        Description = "An ASP.NET Core Web API for managing ToDo items",
+                        Title = "Contacts API",
+                        Description = "An example API for contacts",
                         TermsOfService = new Uri("https://example.com/terms"),
                         Contact = new OpenApiContact
                         {
