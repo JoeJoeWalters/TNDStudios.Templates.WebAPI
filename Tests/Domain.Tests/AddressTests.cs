@@ -14,7 +14,7 @@ namespace Tests
 
         }
 
-        [Theory, Trait("InMemory", "yes")]
+        [Fact, Trait("InMemory", "yes")]
         [InlineData()]
         public void When_Address_Cast_To_AddressVM() 
         {
