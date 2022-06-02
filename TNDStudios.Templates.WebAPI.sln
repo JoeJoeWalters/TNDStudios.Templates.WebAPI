@@ -16,6 +16,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repository", "Repository", "{4DE239BF-CAE1-47A1-BE03-9E6DC45C96DB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{36537A4F-7513-45B8-ADDE-739A8F5B8843}"
+	ProjectSection(SolutionItems) = preProject
+		Tests\TestRunner.bat = Tests\TestRunner.bat
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Component.Tests", "Tests\Component.Tests\Component.Tests.csproj", "{842300D5-FB8F-4121-90C7-8F5C04DC23FC}"
 EndProject
