@@ -10,19 +10,19 @@ namespace Repository.Tests
             _repository = new MemoryRepository<TestDomainObject, TestDocumentObject>(ToDocumentObject, ToDomainObject);
         }
 
-        [Fact]
+        [Fact, Trait("InMemory", "yes")]
         public override void Add() => base.Add();
 
-        [Fact]
+        [Fact, Trait("InMemory", "yes")]
         public override void Delete() => base.Delete();
         
-        [Fact]
+        [Fact, Trait("InMemory", "yes")]
         public override void Get() => base.Get();
         
-        [Fact]
+        [Fact, Trait("InMemory", "yes")]
         public override void Query() => base.Query();
 
-        [Fact]
+        [Fact, Trait("InMemory", "yes")]
         public override void DataLoad() => base.DataLoad();
     }
 }

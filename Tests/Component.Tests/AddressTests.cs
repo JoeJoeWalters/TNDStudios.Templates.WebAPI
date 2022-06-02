@@ -16,7 +16,7 @@ namespace Tests
 
         }
 
-        [Theory]
+        [Theory, Trait("InMemory", "yes")]
         [InlineData()]
         public void When_Address_Cast_To_AddressVM() 
         {
@@ -55,7 +55,7 @@ namespace Tests
             result.PostalCode.Should().Be(address.PostalCode);
         }
 
-        [Theory]
+        [Theory, Trait("InMemory", "yes")]
         [InlineData("GBR", "GB", "United Kingdom")]
         public void When_3Digit_Address_Exists(string countryCode, string expected2Digit, string expectedName)
         {
@@ -71,7 +71,7 @@ namespace Tests
             resolvedObject.CountryName.Should().Be(expectedName);
         }
 
-        [Fact]
+        [Fact, Trait("InMemory", "yes")]
         public void When_3Digit_Address_Doesnt_Exist()
         {
             // Arrange

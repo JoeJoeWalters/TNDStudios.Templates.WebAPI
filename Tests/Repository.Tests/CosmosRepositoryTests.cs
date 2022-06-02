@@ -17,19 +17,19 @@ namespace Repository.Tests
                 _collectionName, _partitionKey);
         }
 
-        [Fact]
+        [Fact, Trait("InMemory", "no")]
         public override void Add() => base.Add();
 
-        [Fact]
+        [Fact, Trait("InMemory", "no")]
         public override void Delete() => base.Delete();
-        
-        [Fact]
+
+        [Fact, Trait("InMemory", "no")]
         public override void Get() => base.Get();
-        
-        [Fact]
+
+        [Fact, Trait("InMemory", "no")]
         public override void Query() => base.Query();
 
-        [Fact]
+        [Fact, Trait("InMemory", "no")]
         public override void DataLoad() => base.DataLoad();
     }
 }
