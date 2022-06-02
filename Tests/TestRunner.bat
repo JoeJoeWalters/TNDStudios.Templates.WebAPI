@@ -1,10 +1,11 @@
 dotnet tool install -g dotnet-reportgenerator-globaltool
-pause
+rd coverage /S /Q
 FOR /D /r %%G in ("*.Tests") DO (
 	Echo We found %%~nxG
-	cd %%~nxG && dotnet test --collect:"XPlat Code Coverage" --filter "InMemory=yes"
+	cd %%~nxG
+	rd TestResults /S /Q
+	dotnet test --collect:"XPlat Code Coverage" --filter "InMemory=yes"
 	cd ..
 )
-pause
 reportgenerator "-reports:./**/coverage.cobertura.xml" "-targetdir:./coverage" "-reporttypes:Html"
-pause
+start ./coverage/index.html
