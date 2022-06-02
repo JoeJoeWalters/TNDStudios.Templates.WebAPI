@@ -6,6 +6,8 @@ namespace Domain
 {
     public class ContactVM
     {
+        public string Id { get; set; } = Guid.NewGuid().ToString();
+
         public string Title { get; set; } = string.Empty;
 
         public string Forename { get; set; } = string.Empty;
@@ -23,6 +25,7 @@ namespace Domain
 
         public ContactVM(Contact source)
         {
+            this.Id = source.Id;
             this.Title = source.Title;
             this.Forename = source.Forename;
             this.Middlenames = source.Middlenames;

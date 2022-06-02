@@ -23,6 +23,7 @@ namespace Tests
             Contact contact =
                 new Contact()
                 {
+                    Id = Guid.NewGuid().ToString(),
                     Forename = "Forename",
                     Surname = "Surname",
                     Middlenames = "Middlenames",
@@ -45,6 +46,12 @@ namespace Tests
             ContactVM result = new ContactVM(contact);
 
             // Assert
+            result.Id.Should().Be(contact.Id);
+            result.Forename.Should().Be(contact.Forename);
+            result.Middlenames.Should().Be(contact.Middlenames);
+            result.Surname.Should().Be(contact.Surname);
+            result.Title.Should().Be(contact.Title);
+            result.Address.Should().NotBeNull();
             result.Address.Id.Should().Be(contact.Address.Id);
             result.Address.Addressee.Should().Be(contact.Address.Addressee);
             result.Address.AddressLine1.Should().Be(contact.Address.AddressLine1);
