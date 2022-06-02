@@ -1,5 +1,3 @@
-using Xunit;
-
 namespace Repository.Tests
 {
     public class CosmosRepositoryTests : RepositoryTestsBase
