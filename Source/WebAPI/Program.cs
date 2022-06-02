@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using System.Reflection;
 using Microsoft.OpenApi.Models;
 
-[assembly: InternalsVisibleTo("Tests")]
+[assembly: InternalsVisibleTo("Component.Tests")]
 
 namespace WebAPI
 {

@@ -33,13 +33,18 @@ namespace WebAPI.Controllers
         /// Save a contact
         /// </summary>
         /// <param name="contact">The contact model to be saved</param>
-        /// <returns></returns>
+        /// <returns>The saved record</returns>
         [HttpPost]
         public IActionResult Add(Contact contact)
         {
             return Ok(new ContactVM() { });
         }
 
+        /// <summary>
+        /// Merge changes to a contact in to an existing record
+        /// </summary>
+        /// <param name="contact">The contact record changes to merge in</param>
+        /// <returns>The merged record</returns>
         [HttpPatch]
         public IActionResult Merge(Contact contact)
         {
