@@ -15,6 +15,23 @@ namespace Tests
         }
 
         [Fact, Trait("InMemory", "yes")]
+        public void When_ContactVN_Created_Via_Parameterless_Constructor()
+        {
+            // Arrange
+            ContactVM vm;
+
+            // Act
+            vm = new ContactVM();
+
+            // Assert
+            vm.Address.Should().NotBeNull();
+            vm.Forename.Should().BeEmpty();
+            vm.Middlenames.Should().BeEmpty();
+            vm.Surname.Should().BeEmpty();
+            vm.Title.Should().BeEmpty();
+        }
+
+        [Fact, Trait("InMemory", "yes")]
         public void When_Contact_Cast_To_ContactVM()
         {
             // Arrange
