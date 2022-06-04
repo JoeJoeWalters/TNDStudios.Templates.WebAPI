@@ -26,7 +26,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository.Tests", "Tests\R
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.Tests", "Tests\Domain.Tests\Domain.Tests.csproj", "{5D2C2FD1-D598-4605-8962-32FE7ED8133B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI.Contracts", "WebAPI.Contracts\WebAPI.Contracts.csproj", "{340D96DC-6291-4DDB-9872-B628CC293E18}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI.Contracts", "Source\WebAPI.Contracts\WebAPI.Contracts.csproj", "{340D96DC-6291-4DDB-9872-B628CC293E18}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
