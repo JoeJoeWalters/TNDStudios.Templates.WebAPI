@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 namespace Repository.Common
@@ -19,10 +20,13 @@ namespace Repository.Common
             _toDomain = toDomain;
         }
 
+        [ExcludeFromCodeCoverage]
         public virtual async Task<bool> Delete(string id, String partitionKey) => throw new NotImplementedException();
 
+        [ExcludeFromCodeCoverage]
         public virtual async Task<TDomain> Get(string id, String partitionKey) => throw new NotImplementedException();
 
+        [ExcludeFromCodeCoverage]
         public virtual async Task<IEnumerable<TDomain>> Query(System.Linq.Expressions.Expression<Func<TDocument, bool>> query, string partitionKey) => throw new NotImplementedException();
 
         public TDomain ToDomain(TDocument document)
@@ -31,8 +35,10 @@ namespace Repository.Common
         public TDocument ToDocument(TDomain domain)
             => _toDocument(domain);
 
+        [ExcludeFromCodeCoverage]
         public virtual async Task<bool> Upsert(TDomain item) => throw new NotImplementedException();
 
+        [ExcludeFromCodeCoverage]
         public virtual async Task<bool> WithData(List<TDomain> data) => throw new NotImplementedException();
     }
 }

@@ -3,11 +3,13 @@ using System;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using System.Reflection;
 using Microsoft.OpenApi.Models;
+using System.Diagnostics.CodeAnalysis;
 
 [assembly: InternalsVisibleTo("Component.Tests")]
 
 namespace WebAPI
 {
+    [ExcludeFromCodeCoverage]
     internal class Program
     {
         static void Main(string[] args)
