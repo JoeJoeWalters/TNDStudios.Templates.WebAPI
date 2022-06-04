@@ -41,7 +41,7 @@ namespace WebAPI.Controllers
         [HttpPost]
         public IActionResult Add(Contact contact)
         {
-            return Ok(new ContactVM() { });
+            return Ok(new ContactVM(contact) { });
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace WebAPI.Controllers
         [HttpPatch]
         public IActionResult Merge(Contact contact)
         {
-            return Ok(new ContactVM() { });
+            return Ok(new ContactVM(contact) { });
         }
 
         /// <summary>
