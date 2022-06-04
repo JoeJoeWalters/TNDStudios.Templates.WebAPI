@@ -15,10 +15,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\WebAPI.Contracts\WebAPI.Contracts.csproj" />
 	  <ProjectReference Include="..\Domain\Domain.csproj" />
 	  <ProjectReference Include="..\Repository.Cosmos\Repository.Cosmos.csproj" />
 	  <ProjectReference Include="..\Repository\Repository.Common.csproj" />
+	  <ProjectReference Include="..\WebAPI.Contracts\WebAPI.Contracts.csproj" />
 	</ItemGroup>
 	
 </Project>
