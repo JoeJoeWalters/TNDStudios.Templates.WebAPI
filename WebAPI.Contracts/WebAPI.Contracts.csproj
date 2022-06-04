@@ -6,11 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ISO.3166.CountryCodes" Version="1.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Repository\Repository.Common.csproj" />
+    <ProjectReference Include="..\Source\Domain\Domain.csproj" />
   </ItemGroup>
 
 </Project>

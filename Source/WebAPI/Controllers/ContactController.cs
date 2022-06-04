@@ -1,5 +1,7 @@
 using Domain;
 using Microsoft.AspNetCore.Mvc;
+using Repository.Common;
+using WebAPI.Contracts;
 
 namespace WebAPI.Controllers
 {
@@ -9,13 +11,15 @@ namespace WebAPI.Controllers
     [ApiController]
     [Route("[controller]")]
     [ApiVersion("1.0")]
-    public class ContactController : ControllerBase
+    public class ContactController : ControllerBase, IContactController
     {
-        private readonly ILogger<ContactController> _logger;
+        private readonly ILogger<IContactController> _logger;
+        //private readonly IRepository<Contact, ContactVM> _repository;
 
-        public ContactController(ILogger<ContactController> logger)
+        public ContactController(ILogger<IContactController> logger)//, IRepository<Contact, ContactVM> repository)
         {
             _logger = logger;
+            //_repository = repository;
         }
 
         /// <summary>
@@ -51,5 +55,15 @@ namespace WebAPI.Controllers
             return Ok(new ContactVM() { });
         }
 
+        /// <summary>
+        /// Remove a contact from the store
+        /// </summary>
+        /// <param name="contact">The contact to be removed from the store</param>
+        /// <returns></returns>
+        [HttpDelete]
+        public IActionResult Delete(Contact contact)
+        {
+            return Ok();
+        }
     }
 }
