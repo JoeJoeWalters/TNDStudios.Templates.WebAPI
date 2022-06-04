@@ -7,7 +7,7 @@ namespace WebAPI.Contracts
 {
     public interface IContactController
     {
-        IEnumerable<ContactVM> QueryContacts();
+        IActionResult QueryContacts();
         IActionResult Add(Contact contact);
         IActionResult Merge(Contact contact);
         IActionResult Delete(Contact contact);

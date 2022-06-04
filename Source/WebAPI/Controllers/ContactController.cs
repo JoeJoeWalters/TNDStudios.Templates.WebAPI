@@ -28,9 +28,9 @@ namespace WebAPI.Controllers
         /// <returns>An array of contacts</returns>
         [HttpGet]
         [Route("Query")]
-        public IEnumerable<ContactVM> QueryContacts()
+        public IActionResult QueryContacts()
         {
-            return new List<ContactVM>() { };
+            return Ok(new List<ContactVM>() { });
         }
 
         /// <summary>
