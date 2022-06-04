@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repository", "Repository", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{36537A4F-7513-45B8-ADDE-739A8F5B8843}"
 	ProjectSection(SolutionItems) = preProject
+		Tests\InMemoryTestRunner.bat = Tests\InMemoryTestRunner.bat
+		Tests\RunAllTestRunner.bat = Tests\RunAllTestRunner.bat
 		Tests\TestRunner.bat = Tests\TestRunner.bat
 	EndProjectSection
 EndProject
@@ -26,7 +28,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository.Tests", "Tests\R
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.Tests", "Tests\Domain.Tests\Domain.Tests.csproj", "{5D2C2FD1-D598-4605-8962-32FE7ED8133B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI.Contracts", "Source\WebAPI.Contracts\WebAPI.Contracts.csproj", "{340D96DC-6291-4DDB-9872-B628CC293E18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI.Contracts", "Source\WebAPI.Contracts\WebAPI.Contracts.csproj", "{340D96DC-6291-4DDB-9872-B628CC293E18}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

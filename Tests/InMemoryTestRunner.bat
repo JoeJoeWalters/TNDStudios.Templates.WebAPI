@@ -1,0 +1,1 @@
+./TestRunner.bat "InMemory=yes"
