@@ -17,6 +17,9 @@ namespace WebAPI
 
             var builder = WebApplication.CreateBuilder(args);
 
+            // Add in a background worker hosted inside the web api
+            builder.Services.AddHostedService<Worker>();
+
             // API Versioning
             builder.Services.AddApiVersioning(o =>
             {
