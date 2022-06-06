@@ -1,7 +1,5 @@
 ﻿using Domain;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 
 namespace WebAPI.Contracts
 {

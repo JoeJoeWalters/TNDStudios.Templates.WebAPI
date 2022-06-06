@@ -1,4 +1,4 @@
-namespace WebAPI
+namespace WebAPI.Workers
 {
     /// <summary>
     /// 
@@ -6,24 +6,17 @@ namespace WebAPI
     public class Worker : BackgroundService
     {
         private readonly ILogger<Worker> _logger;
-
-        private Boolean _isRunning = false;
-        /// <summary>
-        /// 
-        /// </summary>
-        public Boolean IsRunning 
-        { 
-            get { return _isRunning; } 
-            set { _isRunning = value; } 
-        }
+        private readonly IWorkerState _state;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="logger"></param>
-        public Worker(ILogger<Worker> logger)
+        /// <param name="state"></param>
+        public Worker(ILogger<Worker> logger, IWorkerState state)
         {
             _logger = logger;
+            _state = state;
         }
 
         /// <summary>
@@ -38,8 +31,8 @@ namespace WebAPI
             {
                 try
                 {
-                    _isRunning = true;
-                    _logger.LogInformation("Running operation at '{time}'", DateTimeOffset.Now);
+                    _state.LastRan = DateTime.UtcNow;
+                    _logger.LogInformation("Running operation at '{time}'", _state.LastRan);
                     await Task.Delay(1000, stoppingToken);
                 }
                 catch (OperationCanceledException ex)

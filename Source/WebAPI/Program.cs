@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using System.Reflection;
 using Microsoft.OpenApi.Models;
 using System.Diagnostics.CodeAnalysis;
+using WebAPI.Workers;
 
 [assembly: InternalsVisibleTo("Component.Tests")]
 
@@ -18,6 +19,8 @@ namespace WebAPI
             var builder = WebApplication.CreateBuilder(args);
 
             // Add in a background worker hosted inside the web api
+            IWorkerState workerState = new WorkerState() { LastRan = DateTime.MinValue };
+            builder.Services.AddSingleton<IWorkerState>(workerState);
             builder.Services.AddHostedService<Worker>();
 
             // API Versioning

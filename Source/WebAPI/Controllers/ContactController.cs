@@ -16,6 +16,10 @@ namespace WebAPI.Controllers
         private readonly ILogger<IContactController> _logger;
         //private readonly IRepository<Contact, ContactVM> _repository;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="logger"></param>
         public ContactController(ILogger<IContactController> logger)//, IRepository<Contact, ContactVM> repository)
         {
             _logger = logger;
