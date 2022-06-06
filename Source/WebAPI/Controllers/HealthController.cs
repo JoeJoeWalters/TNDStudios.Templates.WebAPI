@@ -1,5 +1,6 @@
 using Domain;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Repository.Common;
 using WebAPI.Contracts;
 using WebAPI.Workers;
@@ -47,7 +48,9 @@ namespace WebAPI.Controllers
         [Route("State")]
         public IActionResult State()
         {
-            return Ok(_workerState.IsRunning);
+            HealthCheckResult result = _workerState.IsRunning ? HealthCheckResult.Healthy("Worker Running.") : HealthCheckResult.Unhealthy("Worker Not Running.");
+
+            return Ok(result);
         }
     }
 }
