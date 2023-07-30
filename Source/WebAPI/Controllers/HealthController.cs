@@ -1,7 +1,5 @@
-using Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Repository.Common;
 using WebAPI.Contracts;
 using WebAPI.Workers;
 
