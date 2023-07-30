@@ -37,7 +37,13 @@ namespace WebAPI
             // Add in the hosted dependency checker
             builder.Services.AddDependencyChecker(o => 
                 {
-                    o.Checks.Add(new HttpCheck() { Id = _dependencyCheckId, Path = "https://localhost:7049/health/healthcheck", OnChange = Program.HttpDependencyChange });
+                    o.Checks.Add(
+                        new HttpCheck() 
+                        { 
+                            Id = _dependencyCheckId, 
+                            Path = "https://localhost:7049/health/healthcheck", 
+                            OnChange = Program.HttpDependencyChange 
+                        });
                     o.Frequency = 10000;
                 });
 
