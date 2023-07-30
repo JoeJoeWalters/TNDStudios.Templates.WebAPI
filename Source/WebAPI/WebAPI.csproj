@@ -11,11 +11,13 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.1.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.1.0" />
+		<PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="7.0.9" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Domain\Domain.csproj" />
+	  <ProjectReference Include="..\Packages\WebAPI.DependencyChecker\WebAPI.DependencyChecker.csproj" />
 	  <ProjectReference Include="..\Repository.Cosmos\Repository.Cosmos.csproj" />
 	  <ProjectReference Include="..\Repository\Repository.Common.csproj" />
 	  <ProjectReference Include="..\WebAPI.Contracts\WebAPI.Contracts.csproj" />

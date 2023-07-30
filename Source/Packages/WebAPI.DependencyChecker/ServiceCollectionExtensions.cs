@@ -5,11 +5,13 @@ namespace WebAPI.DependencyChecker
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddDependencyChecker(this IServiceCollection services, DependencyCheckerConfig config)
+        public static IServiceCollection AddDependencyChecker(this IServiceCollection services, Action<DependencyCheckerConfig> config)
         {
             DependencyWorkerState workerState = new DependencyWorkerState() { LastRan = DateTime.MinValue };
             services.AddSingleton<DependencyWorkerState>(workerState);
-            services.AddSingleton<DependencyCheckerConfig>(config);
+            DependencyCheckerConfig configResult = new DependencyCheckerConfig();
+            config.Invoke(configResult);
+            services.AddSingleton<DependencyCheckerConfig>(configResult);
             services.AddHostedService<DependencyWorker>();
 
             return services;

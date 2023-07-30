@@ -1,6 +1,8 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System.Net;
 using WebAPI.DependencyChecker;
+using WebAPI.DependencyChecker.Infrastructure;
 
 namespace WebAPI.Workers
 {
@@ -25,6 +27,8 @@ namespace WebAPI.Workers
             _config = config;
         }
 
+        private bool PreviousState(IDependencyCheck check) => false;
+
         /// <summary>
         /// 
         /// </summary>
@@ -37,15 +41,22 @@ namespace WebAPI.Workers
             {
                 try
                 {
-                    List<IDependencyCheck> failed = new List<IDependencyCheck>();
+                    DependencyCheckResults results = new DependencyCheckResults();
 
                     // Do each check
                     foreach(IDependencyCheck check in _config.Checks)
                     {
-                        failed.Add(check);
+                        switch (check)
+                        {
+                            case HttpCheck:
+
+                                results.Checks.Add(new HttpCheckResult() {Origin = check, StatusCode = HttpStatusCode.OK, SuccessState = true, PreviousState = PreviousState(check) });
+
+                                break;
+                        }
                     }
 
-                    if (_config.OnFailed != null && failed.Any()) { _config.OnFailed(failed); }
+                    if (_config.OnCheck != null && results.Checks.Any()) { _config.OnCheck(results); }
 
                     _state.LastRan = DateTime.UtcNow;
                     _logger.LogInformation("Running operation at '{time}'", _state.LastRan);

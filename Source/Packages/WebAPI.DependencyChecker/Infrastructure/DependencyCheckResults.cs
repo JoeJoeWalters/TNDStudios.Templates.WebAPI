@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net;
 
 namespace WebAPI.DependencyChecker.Infrastructure
 {
@@ -14,12 +9,20 @@ namespace WebAPI.DependencyChecker.Infrastructure
 
     public interface IDependencyCheckResult
     {
-        Boolean Success { get; set; }
+        IDependencyCheck Origin { get; set; }
+
+        Boolean SuccessState { get; set; }
+
+        Boolean PreviousState { get; set; }
     }
 
     public class HttpCheckResult : IDependencyCheckResult
     {
-        public Boolean Success { get; set; } = false;
+        public IDependencyCheck Origin { get; set; }
+
+        public Boolean SuccessState { get; set; } = false;
+
+        public Boolean PreviousState { get; set; } = false;
 
         public HttpStatusCode StatusCode { get; set; } = HttpStatusCode.OK;
     }

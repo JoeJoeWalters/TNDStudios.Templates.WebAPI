@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using WebAPI.DependencyChecker.Infrastructure;
 
 namespace WebAPI.DependencyChecker
 {

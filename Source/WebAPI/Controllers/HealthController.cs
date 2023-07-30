@@ -14,14 +14,14 @@ namespace WebAPI.Controllers
     public class HealthController : ControllerBase, IHealthController
     {
         private readonly ILogger<IHealthController> _logger;
-        private readonly IWorkerState _workerState;
+        private readonly DependencyWorkerState _workerState;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="worker"></param>
-        public HealthController(ILogger<IHealthController> logger, IWorkerState workerState)
+        public HealthController(ILogger<IHealthController> logger, DependencyWorkerState workerState)
         {
             _logger = logger;
             _workerState = workerState;
@@ -43,8 +43,12 @@ namespace WebAPI.Controllers
         [Route("State")]
         public IActionResult State()
         {
-            HealthCheckResult result = _workerState.IsRunning ? HealthCheckResult.Healthy("Worker Running.") : HealthCheckResult.Unhealthy("Worker Not Running.");
+            Dictionary<string, object> results = new Dictionary<string, object>();
+            
+            results.Add("WorkerRunning", _workerState.IsRunning);
 
+            HealthCheckResult result = new HealthCheckResult(HealthStatus.Healthy, "", data: results);
+           
             return Ok(result);
         }
     }

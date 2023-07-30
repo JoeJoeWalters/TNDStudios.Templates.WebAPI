@@ -1,10 +1,10 @@
-using System.Runtime.CompilerServices;
-using System;
 using Microsoft.AspNetCore.Mvc.Versioning;
-using System.Reflection;
 using Microsoft.OpenApi.Models;
 using System.Diagnostics.CodeAnalysis;
-using WebAPI.Workers;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using WebAPI.DependencyChecker;
+using WebAPI.DependencyChecker.Infrastructure;
 
 [assembly: InternalsVisibleTo("Component.Tests")]
 
@@ -13,15 +13,22 @@ namespace WebAPI
     [ExcludeFromCodeCoverage]
     internal class Program
     {
+        static void DependencyStateCheck(DependencyCheckResults result)
+        {
+
+        }
+
         static void Main(string[] args)
         {
 
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add in a background worker hosted inside the web api
-            IWorkerState workerState = new WorkerState() { LastRan = DateTime.MinValue };
-            builder.Services.AddSingleton<IWorkerState>(workerState);
-            builder.Services.AddHostedService<Worker>();
+            // Add in the hosted dependency checker
+            builder.Services.AddDependencyChecker(o => 
+                {
+                    o.Checks.Add(new HttpCheck() { Id = "DependencyCheck", Path = "https://localhost:7049/health/healthcheck" });
+                    o.OnCheck = Program.DependencyStateCheck;
+                });
 
             // API Versioning
             builder.Services.AddApiVersioning(o =>
