@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System.Net;
+using System.Net.Http;
 using WebAPI.DependencyChecker;
 using WebAPI.DependencyChecker.Infrastructure;
 
@@ -16,6 +17,7 @@ namespace WebAPI.Workers
         private readonly DependencyCheckerConfig _config;
 
         private Dictionary<string, bool> _previousStates;
+        private HttpClient _httpClient;
 
         /// <summary>
         /// 
@@ -39,6 +41,18 @@ namespace WebAPI.Workers
                 return null;
         }
 
+        public override Task StartAsync(CancellationToken cancellationToken)
+        {
+            _httpClient = new HttpClient();
+            return base.StartAsync(cancellationToken);
+        }
+
+        public override Task StopAsync(CancellationToken cancellationToken)
+        {
+            _httpClient.Dispose();
+            return base.StopAsync(cancellationToken);
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -52,7 +66,7 @@ namespace WebAPI.Workers
                 try
                 {
                     // Perform each check
-                    foreach(IDependencyCheck check in _config.Checks)
+                    foreach (IDependencyCheck check in _config.Checks)
                     {
                         IDependencyCheckResult? checkResult = null;
 
@@ -61,7 +75,7 @@ namespace WebAPI.Workers
                         {
                             case HttpCheck:
 
-                                checkResult = await ExecuteHttpCheck((HttpCheck)check);
+                                checkResult = ExecuteHttpCheck((HttpCheck)check);
 
                                 break;
                         }
@@ -70,19 +84,18 @@ namespace WebAPI.Workers
                         if (checkResult != null &&
                             checkResult.SuccessState != checkResult.PreviousState)
                         {
-                            // Call the hook
-                            if (check.OnChange != null) 
-                                check.OnChange(checkResult);
+                            // Swap the previous states before the hook for debugging (as the debugging can stop the state setting for the next loop)
+                            _previousStates[check.Id] = checkResult.SuccessState;
 
-                            // Hook was called (maybe) so now set the previous state to be the current one
-                            _previousStates.Add(check.Id, checkResult.SuccessState); 
+                            // Call the hook
+                            if (check.OnChange != null)
+                                check.OnChange(checkResult);
                         }
                     }
 
                     // Record the last run time and then wait for a given length of time to run again
                     _state.LastRan = DateTime.UtcNow;
                     _logger.LogInformation("Running checks at '{time}'", _state.LastRan);
-                    await Task.Delay(_config.Frequency, stoppingToken);
                 }
                 catch (OperationCanceledException ex)
                 {
@@ -92,19 +105,22 @@ namespace WebAPI.Workers
                 {
                     // Handle any errors and ensure the while loop isn't broken so we can recover
                 }
+                finally
+                {
+                    await Task.Delay(_config.Frequency, stoppingToken);
+                }
             }
         }
 
-        protected async Task<IDependencyCheckResult> ExecuteHttpCheck(HttpCheck check)
+        protected IDependencyCheckResult ExecuteHttpCheck(HttpCheck check)
         {
             HttpCheckResult result = new HttpCheckResult() { Origin = check };
-            
-            HttpClient httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri(check.Path);
-            var httpResult = await httpClient.GetAsync(httpClient.BaseAddress);
+
+            var httpResult = _httpClient.GetAsync(new Uri(check.Path)).Result;
 
             result.SuccessState = check.ExpectedResults.Contains(httpResult.StatusCode);
-            result.PreviousState = PreviousState(check) ?? result.SuccessState;
+            result.StatusCode = httpResult.StatusCode;
+            result.PreviousState = PreviousState(check) ?? (result.SuccessState ? result.SuccessState : true); // If the first ever check is a failure, report the previous state as working so it kicks off the hooks otherwise they will never fire
 
             return result;
         }

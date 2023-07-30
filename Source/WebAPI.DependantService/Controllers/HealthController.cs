@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace WebAPI.DependantService.Controllers
 {
@@ -19,6 +20,7 @@ namespace WebAPI.DependantService.Controllers
         /// <returns>Always Ok response to indicate it's up</returns>
         [HttpGet]
         [Route("Healthcheck")]
-        public IActionResult Healthcheck() => Ok();
+        public IActionResult Healthcheck()
+            => (DateTime.UtcNow.Second > 30) ? Ok() : new StatusCodeResult((int)HttpStatusCode.InternalServerError); // Switch to a success / failure state every 30 seconds to test the dependency checking in the web api
     }
 }
