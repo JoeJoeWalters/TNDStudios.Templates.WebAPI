@@ -33,10 +33,7 @@ namespace WebAPI.Controllers
         /// <returns>Always Ok response to indicate it's up</returns>
         [HttpGet]
         [Route("Healthcheck")]
-        public IActionResult Healthcheck()
-        {
-            return Ok();
-        }
+        public IActionResult Healthcheck() => Ok();
 
         /// <summary>
         /// Endpoint to report on health of services

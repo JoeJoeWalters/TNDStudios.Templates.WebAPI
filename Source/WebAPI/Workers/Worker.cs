@@ -31,6 +31,8 @@ namespace WebAPI.Workers
             {
                 try
                 {
+                    //https://localhost:7049/health/healthcheck
+
                     _state.LastRan = DateTime.UtcNow;
                     _logger.LogInformation("Running operation at '{time}'", _state.LastRan);
                     await Task.Delay(1000, stoppingToken);
