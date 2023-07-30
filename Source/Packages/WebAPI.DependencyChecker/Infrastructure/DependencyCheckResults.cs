@@ -2,11 +2,6 @@
 
 namespace WebAPI.DependencyChecker.Infrastructure
 {
-    public class DependencyCheckResults
-    {
-        public List<IDependencyCheckResult> Checks { get; set; } = new List<IDependencyCheckResult>();
-    }
-
     public interface IDependencyCheckResult
     {
         IDependencyCheck Origin { get; set; }

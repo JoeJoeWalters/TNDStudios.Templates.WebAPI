@@ -6,6 +6,8 @@ namespace WebAPI.DependencyChecker
     public interface IDependencyCheck
     {
         string Id { get; set; }
+
+        Action<IDependencyCheckResult> OnChange { get; set; }
     }
 
     public class HttpCheck : IDependencyCheck
@@ -15,6 +17,8 @@ namespace WebAPI.DependencyChecker
         public string Path { get; set; } = string.Empty;
 
         public List<HttpStatusCode> ExpectedResults { get; set; } = new List<HttpStatusCode>() { HttpStatusCode.OK, HttpStatusCode.Created };
+
+        public Action<IDependencyCheckResult>? OnChange { get; set; }
     }
 
     public class DependencyCheckerConfig
@@ -28,10 +32,5 @@ namespace WebAPI.DependencyChecker
         /// Frequency of checks (in milliseconds)
         /// </summary>
         public int Frequency { get; set; } = 1000;
-
-        /// <summary>
-        /// Method to call when a set of states has failed
-        /// </summary>
-        public Action<DependencyCheckResults>? OnCheck { get; set; } = null;
     }
 }

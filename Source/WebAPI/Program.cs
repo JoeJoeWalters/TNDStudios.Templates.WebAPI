@@ -13,9 +13,20 @@ namespace WebAPI
     [ExcludeFromCodeCoverage]
     internal class Program
     {
-        static void DependencyStateCheck(DependencyCheckResults result)
-        {
+        internal const string _dependencyCheckId = "DependencyCheck";
 
+        // Called when a HTTP Dependency changes between available and not available
+        static void HttpDependencyChange(IDependencyCheckResult result)
+        {
+            switch (result.Origin.Id)
+            {
+                case _dependencyCheckId:
+
+                    // Dependent Web API has changed state
+
+
+                    break;
+            }
         }
 
         static void Main(string[] args)
@@ -26,8 +37,8 @@ namespace WebAPI
             // Add in the hosted dependency checker
             builder.Services.AddDependencyChecker(o => 
                 {
-                    o.Checks.Add(new HttpCheck() { Id = "DependencyCheck", Path = "https://localhost:7049/health/healthcheck" });
-                    o.OnCheck = Program.DependencyStateCheck;
+                    o.Checks.Add(new HttpCheck() { Id = _dependencyCheckId, Path = "https://localhost:7049/health/healthcheck", OnChange = Program.HttpDependencyChange });
+                    o.Frequency = 1000;
                 });
 
             // API Versioning

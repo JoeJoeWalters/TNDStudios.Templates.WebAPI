@@ -15,6 +15,8 @@ namespace WebAPI.Workers
         private readonly DependencyWorkerState _state;
         private readonly DependencyCheckerConfig _config;
 
+        private Dictionary<string, bool> _previousStates;
+
         /// <summary>
         /// 
         /// </summary>
@@ -25,9 +27,17 @@ namespace WebAPI.Workers
             _logger = logger;
             _state = state;
             _config = config;
+            _previousStates = new Dictionary<string, bool>();
         }
 
-        private bool PreviousState(IDependencyCheck check) => false;
+        private bool? PreviousState(IDependencyCheck check)
+        {
+            // Because TryGetValue only provides "false" not Bool? = null
+            if (_previousStates.ContainsKey(check.Id))
+                return _previousStates[check.Id];
+            else
+                return null;
+        }
 
         /// <summary>
         /// 
@@ -41,25 +51,37 @@ namespace WebAPI.Workers
             {
                 try
                 {
-                    DependencyCheckResults results = new DependencyCheckResults();
-
-                    // Do each check
+                    // Perform each check
                     foreach(IDependencyCheck check in _config.Checks)
                     {
+                        IDependencyCheckResult? checkResult = null;
+
+                        // Depending on the check type we can execute the appropriate functionality
                         switch (check)
                         {
                             case HttpCheck:
 
-                                results.Checks.Add(new HttpCheckResult() {Origin = check, StatusCode = HttpStatusCode.OK, SuccessState = true, PreviousState = PreviousState(check) });
+                                checkResult = await ExecuteHttpCheck((HttpCheck)check);
 
                                 break;
                         }
+
+                        // Do we have a hook to call and has the state changed?
+                        if (checkResult != null &&
+                            checkResult.SuccessState != checkResult.PreviousState)
+                        {
+                            // Call the hook
+                            if (check.OnChange != null) 
+                                check.OnChange(checkResult);
+
+                            // Hook was called (maybe) so now set the previous state to be the current one
+                            _previousStates.Add(check.Id, checkResult.SuccessState); 
+                        }
                     }
 
-                    if (_config.OnCheck != null && results.Checks.Any()) { _config.OnCheck(results); }
-
+                    // Record the last run time and then wait for a given length of time to run again
                     _state.LastRan = DateTime.UtcNow;
-                    _logger.LogInformation("Running operation at '{time}'", _state.LastRan);
+                    _logger.LogInformation("Running checks at '{time}'", _state.LastRan);
                     await Task.Delay(_config.Frequency, stoppingToken);
                 }
                 catch (OperationCanceledException ex)
@@ -71,6 +93,20 @@ namespace WebAPI.Workers
                     // Handle any errors and ensure the while loop isn't broken so we can recover
                 }
             }
+        }
+
+        protected async Task<IDependencyCheckResult> ExecuteHttpCheck(HttpCheck check)
+        {
+            HttpCheckResult result = new HttpCheckResult() { Origin = check };
+            
+            HttpClient httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri(check.Path);
+            var httpResult = await httpClient.GetAsync(httpClient.BaseAddress);
+
+            result.SuccessState = check.ExpectedResults.Contains(httpResult.StatusCode);
+            result.PreviousState = PreviousState(check) ?? result.SuccessState;
+
+            return result;
         }
     }
 }
