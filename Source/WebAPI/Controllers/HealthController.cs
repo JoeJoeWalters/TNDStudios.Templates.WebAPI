@@ -44,8 +44,16 @@ namespace WebAPI.Controllers
         public IActionResult State()
         {
             Dictionary<string, object> results = new Dictionary<string, object>();
-            
-            results.Add("WorkerRunning", _workerState.IsRunning);
+
+            // Dependent Web API has changed state
+            SystemConfig config = Program.ServiceProvider.GetRequiredService<SystemConfig>();
+            if (config != null)
+            {
+                results.Add("UsingCachedData", config.UseCacheServices);
+            }
+
+            results.Add("DependencyChecks", _workerState.IsRunning);
+            results.Add("LastDependencyCheck", _workerState.LastRan);
 
             HealthCheckResult result = new HealthCheckResult(HealthStatus.Healthy, "", data: results);
            

@@ -10,10 +10,16 @@ using WebAPI.DependencyChecker.Infrastructure;
 
 namespace WebAPI
 {
+    internal class SystemConfig
+    {
+        public Boolean UseCacheServices { get; set; } = false;
+    }
+
     [ExcludeFromCodeCoverage]
     internal class Program
     {
         internal const string _dependencyCheckId = "DependencyCheck";
+        public static ServiceProvider ServiceProvider;
 
         // Called when a HTTP Dependency changes between available and not available
         static void HttpDependencyChange(IDependencyCheckResult result)
@@ -23,7 +29,11 @@ namespace WebAPI
                 case _dependencyCheckId:
 
                     // Dependent Web API has changed state
-
+                    SystemConfig config = ServiceProvider.GetRequiredService<SystemConfig>();
+                    if (config != null)
+                    {
+                        config.UseCacheServices = !result.SuccessState;
+                    }
 
                     break;
             }
@@ -47,6 +57,8 @@ namespace WebAPI
                     o.Frequency = 10000;
                 });
 
+            builder.Services.AddSingleton<SystemConfig>(new SystemConfig() { UseCacheServices = false });
+
             // API Versioning
             builder.Services.AddApiVersioning(o =>
             {
@@ -68,7 +80,7 @@ namespace WebAPI
 
             // Add services to the container.
             builder.Services.AddControllers();
-
+            
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(
@@ -95,6 +107,8 @@ namespace WebAPI
                     var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
                 });
+
+            ServiceProvider = builder.Services.BuildServiceProvider();
 
             var app = builder.Build();
 
